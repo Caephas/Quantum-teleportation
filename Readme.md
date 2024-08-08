@@ -1,78 +1,75 @@
-# Quantum Teleportation and Gate Teleportation with Qiskit
+# Quantum Teleportation
 
-This project demonstrates the implementation of both quantum state teleportation and gate teleportation using Qiskit. Quantum teleportation is a process by which the state of a qubit (Alice's qubit) is transmitted to another qubit (Bob's qubit) using entanglement and classical communication. Gate teleportation allows a quantum gate operation to be transferred from one qubit to another, also using entanglement and classical communication.
+## Overview
+
+These scripts demonstrates the quantum teleportation protocol using the Cirq and Qiskit libraries. Quantum teleportation is a process by which the state of a qubit is transferred from one location to another without physically sending the qubit itself. The protocol leverages quantum entanglement and classical communication.
 
 ## Requirements
 
 - Python 3.x
+- Cirq
 - Qiskit
-- Matplotlib
-
-## Installation
-
-To run this project, you need to install Qiskit and Matplotlib. You can install these using pip:
+You can install Cirq using pip:
 
 ```bash
-pip install qiskit matplotlib
+pip install cirq
+pip install qiskit
 ```
 
-## Steps in the Code
+## Code Explanation
 
-### 1. Initialize the Circuit
+The provided script performs quantum teleportation of a qubit's state from Alice (Q1) to Bob (Q3). Here is a step-by-step explanation of the script:
 
-We start by initializing a quantum circuit with 3 qubits and 3 classical bits.
+1. **Initialization**:
+    - Three qubits are initialized: Q1 (Alice's state qubit), Q2 (Alice's control qubit), and Q3 (Bob's control qubit).
 
-### 2. Entangle Qubits
+2. **State Preparation**:
+    - The state of Q1 is set using a specified quantum gate (`H`, `X`, `Y`, `Z`, or `I`). If an unimplemented gate is provided, an error is raised.
 
-Next, we create an entangled state between qubit 1 (Alice's entangled qubit) and qubit 2 (Bob's qubit) using a Hadamard gate and a CNOT gate.
+3. **Entanglement**:
+    - Q2 and Q3 are entangled using a Hadamard gate on Q2 followed by a CNOT gate between Q2 and Q3.
 
-### 3. Prepare Alice's Qubit
+4. **Bell State Measurement**:
+    - A CNOT gate is applied between Q1 and Q2.
+    - A Hadamard gate is applied to Q1.
+    - Q1 and Q2 are measured.
 
-Prepare Alice's qubit (qubit 0) in an initial state |ψ⟩. Here, we use a Hadamard gate to create a superposition state.
+5. **Conditional Operations**:
+    - A CNOT gate is applied between Q2 and Q3.
+    - A conditional Z gate is applied to Q3 based on the measurement of Q1.
 
-### 4. Perform Bell Measurement
+6. **Final Measurement**:
+    - Q3 is measured to obtain the teleported state.
 
-Perform a Bell measurement on qubit 0 and qubit 1 (Alice's qubits) to entangle them and prepare for teleportation.
+7. **Simulation**:
+    - The circuit is simulated for a specified number of repetitions (default is 100).
+    - The measurement results are printed.
 
-### 5. Measure and Communicate
+You can specify the initial state of the qubit to be teleported by modifying the `qubit_to_send_op` parameter. For example:
 
-Measure qubits 0 and 1, and store the results in classical bits 0 and 1. This step represents the classical communication part of the teleportation protocol.
+```python
+quantum_teleportation(qubit_to_send_op='X')
+```
 
-### 6. Apply Corrections to Bob's Qubit
+## Example Output
 
-Use the classical bits to apply the necessary corrections to qubit 2 (Bob's qubit). Depending on the measurement results, apply the appropriate gates.
+Here is an example of the circuit and the measurement output:
 
-### 7. Measure Bob's Qubit
+```
+Circuit
+(0, 0): ───H───@───H───M───────────────
+               │       │
+(1, 1): ───H───X───M───@───────────────
+                       │
+(2, 2): ───@───────────X───@───M('Z')───
+           │               │
+           X───────────────Z────────────
 
-Finally, measure Bob's qubit to verify the teleportation.
+Measurement output
+Counter({0: 50, 1: 50})
+![Quantum Teleportation Circuit](image.png)
+Measurement output for qubit 3:
+{'0': 47, '1': 53}
+```
 
-### 8. Execute the Circuit
-
-Simulate the circuit using Qiskit's AerSimulator and print the results.
-
-### 9. Visualize the Results
-
-Plot the histogram of the results to visualize the distribution of the measured states.
-
-### 10. Analyze Measurement Results
-
-Separate the counts for each qubit and plot them individually for better visualization.
-
-## Gate Teleportation
-
-### Concept
-
-Gate teleportation involves transferring the action of a quantum gate from one qubit to another, using entanglement and classical communication. This technique ensures that the gate operation can be applied indirectly.
-
-### Steps
-
-1. **Initialize the Circuit**: Initialize a quantum circuit with 3 qubits and 2 classical bits.
-2. **Create Entangled Pair**: Create an entangled pair between qubit 1 and qubit 2.
-3. **Apply Gate to Qubit**: Apply a quantum gate (e.g., X gate) to qubit 0.
-4. **Perform Bell Measurements**: Perform Bell measurements on qubits 0 and 1.
-5. **Measure and Communicate**: Measure qubits 0 and 1, and store the results in classical bits 0 and 1.
-6. **Apply Corrections**: Apply corrections to qubit 2 based on the measurement results.
-
-## Conclusion
-
-This project demonstrates the fundamental concepts of quantum teleportation and gate teleportation using Qiskit. By entangling qubits, performing Bell measurements, and applying conditional operations based on classical communication, we can teleport the state of one qubit to another or transfer a quantum gate operation. The visualization of the measurement results confirms the success of these teleportation protocols.
+The output indicates the measurement results of Bob's qubit (Q3), showing the distribution of states after the teleportation process.
