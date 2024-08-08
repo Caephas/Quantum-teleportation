@@ -56,7 +56,7 @@ quantum_teleportation(qubit_to_send_op='X')
 Here is an example of the circuit and the measurement output:
 
 ```
-Circuit
+Example output Circuit Cirq
 (0, 0): ───H───@───H───M───────────────
                │       │
 (1, 1): ───H───X───M───@───────────────
@@ -68,8 +68,16 @@ Circuit
 Measurement output
 Counter({0: 50, 1: 50})
 
-```
+Example output Circuit Qiskit
 
-`![Quantum Teleportation Circuit](image.png)` should be the correct path to your image. If `image.png` is in a different directory, adjust the path accordingly (e.g., `![Quantum Teleportation Circuit](images/image.png)` if the image is in an `images` folder).
+q_0: ───H─────────@────H────M──────
+                  │         │
+q_1: ───H────@────X─────────M────@─
+             │                    │
+q_2: ───X────X────────────────────X─M
+
+Measurement output for qubit 3:
+{'0': 44, '1': 56}
+```
 
 The output indicates the measurement results of Bob's qubit (Q3), showing the distribution of states after the teleportation process.
