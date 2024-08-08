@@ -67,9 +67,9 @@ Circuit
 
 Measurement output
 Counter({0: 50, 1: 50})
-![Quantum Teleportation Circuit](image.png)
-Measurement output for qubit 3:
-{'0': 47, '1': 53}
+
 ```
+
+`![Quantum Teleportation Circuit](image.png)` should be the correct path to your image. If `image.png` is in a different directory, adjust the path accordingly (e.g., `![Quantum Teleportation Circuit](images/image.png)` if the image is in an `images` folder).
 
 The output indicates the measurement results of Bob's qubit (Q3), showing the distribution of states after the teleportation process.
