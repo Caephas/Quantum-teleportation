@@ -9,7 +9,7 @@ These scripts demonstrates the quantum teleportation protocol using the Cirq and
 - Python 3.x
 - Cirq
 - Qiskit
-You can install Cirq using pip:
+You can install Cirq and Qiskit using pip:
 
 ```bash
 pip install cirq
